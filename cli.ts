@@ -18,6 +18,8 @@ import { jsonLoader } from "./plugins/loaders/json.ts"
 import { json } from "./plugins/transformers/json.ts"
 import { imageLoader } from "./plugins/loaders/image.ts"
 import { image } from "./plugins/transformers/image.ts";
+import { imageLoader } from "./plugins/loaders/image.ts"
+import { text } from "./plugins/transformers/text.ts"
 
 interface Meta {
   options: {
@@ -92,6 +94,9 @@ async function runBundle(
         ...compilerOptions,
         module: "system",
       },
+    }),
+    text({
+      test: (input: string) => /\.(png|svg)$/.test(input)
     }),
   ];
 
