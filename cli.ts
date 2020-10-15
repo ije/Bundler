@@ -17,7 +17,7 @@ import type { FileMap, Graph } from "./graph.ts";
 import { jsonLoader } from "./plugins/loaders/json.ts"
 import { json } from "./plugins/transformers/json.ts"
 import { imageLoader } from "./plugins/loaders/image.ts"
-import { text } from "./plugins/transformers/text.ts"
+import { image } from "./plugins/transformers/image.ts";
 
 interface Meta {
   options: {
@@ -82,18 +82,16 @@ async function runBundle(
     css({
       use: postCSSPlugins,
     }),
-    json({ optimize }),
+    json(),
+    image(),
     typescriptInjectSpecifiers({
       test: (input: string) =>
-        input.startsWith("http") || /\.(css|tsx?|jsx?|json)$/.test(input),
+        input.startsWith("http") || /\.(css|tsx?|jsx?|png)$/.test(input),
       compilerOptions: {
         target: "es2015",
         ...compilerOptions,
         module: "system",
       },
-    }),
-    text({
-      test: (input: string) => /\.(png|svg)$/.test(input)
     }),
   ];
 

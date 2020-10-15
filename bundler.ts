@@ -1,4 +1,4 @@
-import { colors, fs, ImportMap, path, Sha256, ts } from "./deps.ts";
+import { colors, fs, ImportMap, path, Sha256 } from "./deps.ts";
 import {
   createInstantiate,
   createSystemExports,
