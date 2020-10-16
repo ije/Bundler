@@ -79,6 +79,7 @@ export function image(
     return string;
   };
 
+  
   return new Plugin({
     test,
     fn,
