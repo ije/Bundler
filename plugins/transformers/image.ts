@@ -11,7 +11,7 @@ const printer: ts.Printer = ts.createPrinter({ removeComments: false });
 
 export function image(
   {
-    test = (input: string) => /\.(png|svg)$/.test(input),
+    test = (input: string) => /\.(png|jpe?g|tiff|ico)$/i.test(input),
   }: Config = {},
 ) {
   const fn = async (
