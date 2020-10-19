@@ -14,10 +14,10 @@ import { typescriptInjectSpecifiers } from "./plugins/transformers/typescript_in
 import { terser } from "./plugins/transformers/terser.ts";
 import type { CompilerOptions } from "./typescript.ts";
 import type { FileMap, Graph } from "./graph.ts";
-import { jsonLoader } from "./plugins/loaders/json.ts"
-import { json } from "./plugins/transformers/json.ts"
-import { imageLoader } from "./plugins/loaders/image.ts"
-import { text } from "./plugins/transformers/text.ts"
+import { jsonLoader } from "./plugins/loaders/json.ts";
+import { json } from "./plugins/transformers/json.ts";
+import { imageLoader } from "./plugins/loaders/image.ts";
+import { image } from "./plugins/transformers/image.ts";
 
 interface Meta {
   options: {
@@ -45,7 +45,7 @@ const loaders = [
     use: postCSSPlugins,
   }),
   jsonLoader(),
-  imageLoader()
+  imageLoader(),
 ];
 
 async function runBundle(
@@ -86,15 +86,13 @@ async function runBundle(
     image(),
     typescriptInjectSpecifiers({
       test: (input: string) =>
-        input.startsWith("http") || /\.(css|tsx?|jsx?|png)$/.test(input),
+        input.startsWith("http") ||
+        /\.(css|tsx?|jsx?|png|jpe?g|tiff|svg)$/.test(input),
       compilerOptions: {
         target: "es2015",
         ...compilerOptions,
         module: "system",
       },
-    }),
-    text({
-      test: (input: string) => /\.(png|svg)$/.test(input)
     }),
   ];
 
