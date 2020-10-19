@@ -94,11 +94,17 @@ This
 ### Loaders
 
 #### Typescript
-Bundler uses typescript loader by default. You can import `typescript` and `javascript` files directly in your files.
-typescript loader handles modules relative and absolute paths wih and without suffixes as well as urls.
+You can import `typescript` and `javascript` files directly in your files.
+typescript loader handles relative and absolute paths with and without suffixes as well as urls.
+
+```ts
+/* src/index.ts */
+import { isAbsolute } from "https://deno.land/std@.74.0/path/mod.ts";
+console.log(isAbsolute("/absolute/path")) // true
+```
 
 #### JSON
-Bundler uses `JSON` loader by default. You can import `JSON` files directly in your files. The `JSON` loader will convert the file into a javascript module with a default string export.
+You can import `JSON` files directly in your files. The `JSON` loader will convert the file into a javascript module with a default string export.
 
 ```json
 /* src/data.json */
@@ -107,17 +113,28 @@ Bundler uses `JSON` loader by default. You can import `JSON` files directly in y
 }
 ```
 
-```js
+```ts
 /* src/index.ts */
 import data from "./data.json"
 console.log(data) // { foo: "bar" }
 ```
-**Info** [JSON modules](https://github.com/tc39/proposal-json-modules) is currently at **stage 2**. The functionality of this loader might change once  **stage 4** is reached.
+**Info**: [JSON modules](https://github.com/tc39/proposal-json-modules) is currently at **stage 2**. The functionality of this loader might change once  **stage 4** is reached.
+
+
+#### Image
+You can import `png`, `jpg`, `tiff` and `svg` files directly in your files. The `Image` loader will `base64` encode the image and convert it into a javascript module with a default `Image` export.
+**Info**: `base64` will massively enlarge the size. Whenever possible use a dynamic import or a fetch request.
+
+```js
+/* src/index.ts */
+import image from "./image.png"
+console.log(image) // Image()
+```
 
 #### CSS
 CSS is native to browsers and bundler therefore focuses on making css usage really easy.
 It supports [postcss-preset-env](https://preset-env.cssdb.org) with **stage 2** features and **nesting-rules** enabled so you can use the latest css features out of the box.
-Bundler uses CSS loader by default. You can import css files directly in your typescript files. The CSS loader will convert the file into a javascript module with a default string export.
+You can import css files directly in your typescript files. The CSS loader will convert the file into a javascript module with a default string export.
 
 ```css
 /* src/styles.css */
